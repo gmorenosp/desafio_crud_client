@@ -1,15 +1,23 @@
 package com.devsuperior.desafio_crud_client.dto;
 
 import com.devsuperior.desafio_crud_client.entities.Client;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.PastOrPresent;
 
 import java.time.LocalDate;
 
 public class ClientDTO {
 
     private Long id;
+
+    @NotBlank(message = "Campo requerido, não pode ser vazio")
     private String name;
     private String cpf;
     private Double income;
+
+    @PastOrPresent(message = "Campo requerido, não pode ser data futura")
     private LocalDate birthDate;
     private Integer children;
 
