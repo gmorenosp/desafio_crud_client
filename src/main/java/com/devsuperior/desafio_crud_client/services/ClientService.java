@@ -3,6 +3,7 @@ package com.devsuperior.desafio_crud_client.services;
 import com.devsuperior.desafio_crud_client.dto.ClientDTO;
 import com.devsuperior.desafio_crud_client.entities.Client;
 import com.devsuperior.desafio_crud_client.repositories.ClientRepository;
+import com.devsuperior.desafio_crud_client.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,10 +21,8 @@ public class ClientService {
 
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id){
-        Optional<Client> result = repository.findById(id);
-        Client client = result.get();
-        ClientDTO dto = new ClientDTO(client);
-        return dto;
+        Client client = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        return new ClientDTO(client);
     }
 
     @Transactional(readOnly = true)
